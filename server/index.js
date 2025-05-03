@@ -12,7 +12,11 @@ const PORT =  5000;
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: "https://port-01-frontend.onrender.com", 
+    methods: ["GET", "POST"],
+    credentials: true
+}));
 
 const MONGO_URI="mongodb+srv://kolabhavaniprasad:bhavanikola@cluster.zis7u.mongodb.net/emailDB";
 const EMAIL_USER="kolaprasad001@gmail.com";

@@ -22,7 +22,7 @@ const Portfolio = () => {
     e.preventDefault();
     setResponseMessage("");
 
-    const url = contactType === "mail" ? "http://localhost:5000/send-email" : "http://localhost:5000/send-sms";
+    const url = contactType === "mail" ? "https://port-01.onrender.com" : "https://port-01.onrender.com";
     const payload = contactType === "mail"
       ? { name: formData.name, email: formData.email, message: formData.message }
       : { name: formData.name, phone: formData.phone, message: formData.message };
