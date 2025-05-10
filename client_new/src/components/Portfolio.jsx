@@ -131,7 +131,11 @@ const Portfolio = () => {
           <div id="container">
             <div id="box1">
               <h2 id="p1">MediKart</h2>
-              <h4 id="p">A web-based application for online medicine ordering, designed with HTML, CSS, and JavaScript.</h4>
+              <h4 id="p">Designed and developed a dynamic, real-time web application for online medicine ordering using PHP, HTML, and JavaScript, featuring interactive user interfaces, responsive design, and seamless functionality for browsing, ordering, and managing medical products online.
+                <a href="https://github.com/kbhavaniprasad/MEDIKART-PHP-" target="_blank" rel="noopener noreferrer" id="link-icon">
+                  <Link size={18} style={{ marginLeft: "8px", verticalAlign: "middle", color: "#fff", cursor: "pointer" }} />
+                </a>
+              </h4>
             </div>
             <div id="box1">
               <h2 id="p1">Task Manager</h2>
