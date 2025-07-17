@@ -257,17 +257,17 @@ const Portfolio = () => {
   const projects = [
     {
       title: "MediKart",
-      desc: "A real-time medicine ordering web app using PHP, React, JS & HTML.",
+      desc: "Designed and developed a dynamic, real-time web application for online medicine ordering using PHP, HTML,JavaScript and React, featuring interactive user interfaces, responsive design, and seamless functionality for browsing, ordering, and managing medical products online.",
       url: "https://github.com/kbhavaniprasad/MEDIKART-PHP-"
     },
     {
       title: "Task Manager",
-      desc: "Create, organize, and track tasks to boost productivity.",
+      desc: "A Task Manager is a tool that helps users create, track, edit, and organize tasks efficiently, improving productivity. It typically includes features like task prioritization, deadlines, status tracking, and collaboration options.",
       url: "https://github.com/kbhavaniprasad/Task-Manager"
     },
     {
       title: "Coupon Distribution (MERN)",
-      desc: "Distributes coupons fairly with IP & cookie abuse prevention.",
+      desc: "A live web application for round-robin coupon distribution with abuse prevention, ensuring fair allocation through IP and cookie tracking while allowing guest access and providing user feedback.",
       url: "https://github.com/kbhavaniprasad/Coupon-Distribution"
     }
   ];
@@ -310,7 +310,7 @@ const Portfolio = () => {
               <h1 id="t1">Kola Bhavani Prasad</h1>
             </div>
             <p id="content">
-              Passionate about Full Stack Development and Data Structures & Algorithms, constantly exploring efficient solutions and scalable architectures.
+              Passionate about Full Stack Development and Data Structures & Algorithms, constantly exploring efficient solutions and scalable architectures. Excited to build innovative web applications while optimizing performance through algorithmic problem-solving.
             </p>
           </div>
           <img src={profileImage} id="img1" alt="Profile" />
@@ -340,7 +340,7 @@ const Portfolio = () => {
           </div>
           <div id="para">
             <h1>About Me</h1>
-            <h3>Passionate full-stack developer with expertise in the MERN stack and strong DSA knowledge.</h3>
+            <h3>Passionate full-stack developer with expertise in the MERN stack and a strong grasp of Data Structures & Algorithms (DSA). Skilled in designing and developing scalable web applications with efficient backend logic and optimized database management.</h3>
             <div className="resume-buttons">
               <a href={resumePDF} download="Kola_Bhavani_Prasad_Resume.pdf">
                 <button className="resume-btn" onClick={handleResumeDownload}>
@@ -361,7 +361,7 @@ const Portfolio = () => {
           <div id="container">
             <div id="box">
               <h3>
-                I completed a MERN stack internship at Biztron Softech Ltd. from June 24 to July 20, 2024.
+                I completed a MERN stack internship at Biztron Softech Ltd. from June 24 to July 20, 2024, where I gained hands-on experience in MongoDB, Express.js, React.js, and Node.js.
               </h3>
             </div>
           </div>
