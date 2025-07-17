@@ -386,89 +386,36 @@ input {
   background-color: hsla(202, 91%, 35%, 1);
 }
 
-#mail-btn {
-  width: 150px;
-  height: 50px;
-  border-radius: 10px;
-  background-color: hsla(202, 91%, 45%, 0.9);
-  font-size: large;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: 0.3s;
-  margin: 10px;
-}
-
-#mail-btn:hover {
-  background-color: hsla(202, 91%, 35%, 1);
-  transform: scale(1.05);
-}
-
 #contact-form {
-  background: rgba(255, 255, 255, 0.979);
+  background: white;
   padding: 20px;
   border-radius: 10px;
-  width: 100%;
-  max-width: 350px; /* Decreased from 500px to 350px */
-  margin: 20px auto;
+  width: 300px;
+  margin: 0 auto;
+  display: none;
 }
 
-#contact-form input, 
-#contact-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid rgb(0, 0, 0);
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.1);
-  color: rgb(0, 0, 0);
-  box-sizing: border-box; /* Added to prevent overflow */
-}
-
-#contact-form textarea {
-  min-height: 100px;
-}
-
-#contact-form button[type="submit"] {
+#contact-form input {
   width: 100%;
   padding: 10px;
   margin-top: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+#contact-form button {
+  width: 100%;
+  margin-top: 15px;
+  padding: 10px;
   border-radius: 5px;
   background-color: hsla(202, 91%, 45%, 0.9);
   color: white;
   border: none;
   cursor: pointer;
-  transition: 0.3s;
 }
 
-#contact-form button[type="submit"]:hover {
+#contact-form button:hover {
   background-color: hsla(202, 91%, 35%, 1);
-}
-
-#contact-form button[type="submit"]:disabled {
-  background-color: gray;
-  cursor: not-allowed;
-}
-
-/* Alert styles for success/error messages */
-.alert {
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-  text-align: center;
-  font-weight: bold;
-}
-
-.alert.success {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
-}
-
-.alert.error {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
 }
 
 /* Responsive Design */
