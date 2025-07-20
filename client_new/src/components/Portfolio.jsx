@@ -5,6 +5,9 @@ import resumePDF from "../assets/resume.pdf";
 import { FaLinkedin, FaInstagram } from "react-icons/fa";
 import { Link } from "lucide-react";
 
+// Backend URL configuration
+const API_BASE_URL = 'https://portfolio-backend-66zq.onrender.com';
+
 // Logger class
 class PortfolioLogger {
   constructor() {
@@ -34,7 +37,7 @@ class PortfolioLogger {
   }
   
   sendToServer(entry) {
-    fetch('http://localhost:5000/api/log', {
+    fetch(`${API_BASE_URL}/api/log`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(entry)
@@ -150,7 +153,7 @@ const Portfolio = () => {
     });
 
     try {
-      const response = await fetch('http://localhost:5000/api/send-email', {
+      const response = await fetch(`${API_BASE_URL}/api/send-email`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
