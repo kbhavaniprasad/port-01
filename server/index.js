@@ -9,7 +9,11 @@ const PORT = process.env.PORT || 5000;
 
 // ===== MIDDLEWARE =====
 app.use(cors({ 
-  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  origin: [
+    'http://localhost:3000', 
+    'http://localhost:3001',
+    'https://portfolio-frontend-rzmx.onrender.com'
+  ],
   credentials: true
 }));
 app.use(express.json());
@@ -47,7 +51,7 @@ const LogEntry = mongoose.model("LogEntry", new mongoose.Schema({
 }));
 
 // ===== NODEMAILER TRANSPORT =====
-const transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransporter({
   service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER,
@@ -245,6 +249,7 @@ app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📧 Email service: ${process.env.EMAIL_USER ? 'configured' : 'not configured'}`);
   console.log(`🗄️  Database: ${process.env.MONGO_URI ? 'configured' : 'not configured'}`);
+  console.log(`🌐 CORS enabled for: localhost:3000, localhost:3001, portfolio-frontend-rzmx.onrender.com`);
 });
 
 // require('dotenv').config();
