@@ -250,7 +250,7 @@ body {
   text-align: justify;
 }
 
-#intern, #project, #aboutme, #intro {
+#intern, #project, #aboutme, #intro, #certifications, #achievements {
   margin-top: 20px;
 }
 
@@ -280,7 +280,7 @@ body {
   transform: scale(1.05);
 }
 
-/* Technical Skills Section - Updated */
+/* Technical Skills Section */
 #technical-container {
   text-align: center;
   padding: 40px;
@@ -371,6 +371,266 @@ body {
 .skill-card:hover .skill-name {
   transform: scale(1.05);
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Certifications Section */
+#certifications {
+  text-align: center;
+  padding: 60px 40px;
+  margin: 40px 0;
+}
+
+.section-header {
+  margin-bottom: 40px;
+}
+
+.section-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  /*background: linear-gradient(45deg, #61dafb, #ffd700);*/
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background : #fff;
+  background-clip: text;
+}
+
+.section-subtitle {
+  font-size: 1.2rem;
+  color: #ccc;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.certifications-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.certifications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 20px;
+}
+
+.certification-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 25px;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+
+.certification-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.6s ease;
+}
+
+.certification-card:hover::before {
+  left: 100%;
+}
+
+.certification-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(97, 218, 251, 0.5);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.certification-image-container {
+  position: relative;
+  margin-bottom: 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 20px;
+}
+
+.certification-image-wrapper {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid rgba(97, 218, 251, 0.3);
+  transition: all 0.3s ease;
+}
+
+.certification-card:hover .certification-image-wrapper {
+  border-color: rgba(97, 218, 251, 0.8);
+  transform: scale(1.05);
+}
+
+.certification-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.certification-fallback {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #61dafb, #ffd700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.certification-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+}
+
+.certification-card:hover .certification-overlay {
+  opacity: 1;
+}
+
+.view-text {
+  color: white;
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.certification-content {
+  text-align: center;
+}
+
+.certification-content h3 {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+  color: white;
+  line-height: 1.3;
+}
+
+.cert-issuer {
+  font-size: 1.1rem;
+  color: #61dafb;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.cert-date {
+  font-size: 1rem;
+  color: #ccc;
+  font-style: italic;
+}
+
+/* Achievements Section */
+#achievements {
+  text-align: center;
+  padding: 60px 40px;
+  margin: 40px 0;
+}
+
+.achievements-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 25px;
+  padding: 20px;
+}
+
+.achievement-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 30px 25px;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  text-align: left;
+}
+
+.achievement-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.6s ease;
+}
+
+.achievement-card:hover::before {
+  left: 100%;
+}
+
+.achievement-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 215, 0, 0.3);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.achievement-content h3 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  color: white;
+  line-height: 1.3;
+}
+
+.achievement-content p {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  color: #ccc;
+  line-height: 1.5;
+}
+
+.achievement-year {
+  display: inline-block;
+  padding: 6px 15px;
+  background: rgba(255, 215, 0, 0.1);
+  border-radius: 15px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #ffd700;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.achievement-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #ffd700, #61dafb);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.achievement-card:hover .achievement-glow {
+  opacity: 1;
 }
 
 /* Contact Section */
@@ -513,6 +773,16 @@ input {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 20px;
   }
+
+  .certifications-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+  }
+
+  .achievements-grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -559,6 +829,25 @@ input {
 
   .skill-icon {
     font-size: 3.5rem;
+  }
+
+  .certifications-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .achievements-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .certification-card {
+    padding: 20px;
+  }
+
+  .achievement-card {
+    padding: 25px 20px;
+    text-align: center;
   }
 }
 
@@ -610,6 +899,27 @@ input {
   .skill-name {
     font-size: 1.1rem;
   }
+
+  .section-header h1 {
+    font-size: 2rem;
+  }
+
+  .certification-image-container {
+    width: 100px;
+    height: 100px;
+  }
+
+  .certification-content h3 {
+    font-size: 1.2rem;
+  }
+
+  .achievement-content h3 {
+    font-size: 1.2rem;
+  }
+
+  .achievements-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 360px) {
@@ -621,5 +931,9 @@ input {
     width: 200px;
     height: 200px;
     margin: 0 auto;
+  }
+
+  .certifications-grid, .achievements-grid {
+    grid-template-columns: 1fr;
   }
 }
