@@ -458,12 +458,12 @@
 
 
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import './style.css';
 import profileImage from "../assets/photo.png";
 import resumePDF from "../assets/resume.pdf";
-import { FaLinkedin, FaInstagram, FaJava, FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaDatabase } from "react-icons/fa";
-import { Link } from "lucide-react";
+import { FaLinkedin, FaInstagram, FaJava, FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaDatabase, FaExternalLinkAlt, FaRocket, FaMedal, FaTrophy, FaLightbulb } from "react-icons/fa";
+import { Link, Zap, Target } from "lucide-react";
 
 // Backend URL configuration
 const API_BASE_URL = 'https://portfolio-backend-l2ar.onrender.com';
@@ -518,12 +518,7 @@ const skills = [
   { skill: "MongoDB", icon: <FaDatabase />, color: "#47a248" }
 ];
 
-// Certification images (you'll need to add these to your assets folder)
-// import awsCert from "../assets/certifications/aws-cert.jpg";
-// import harvardCert from "../assets/certifications/harvard-cert.jpg";
-// import salesforceCert from "../assets/certifications/salesforce-cert.jpg";
-// import smartcoderCert from "../assets/certifications/smartcoder-cert.jpg";
-
+// Certification images
 const certificationsData = [
   {
     id: 1,
@@ -564,13 +559,15 @@ const achievementsData = [
     id: 1,
     title: "AI National Hackathon Winner",
     description: "Winner at VR Siddhartha College for ML-based smart drone prototype",
-    year: "2025"
+    year: "2025",
+    icon: <FaTrophy />
   },
   {
     id: 2,
     title: "Patent Published - AI-Powered Smart Drone System",
     description: "Co-inventor in published patent for AI-driven drone spraying system for precision pesticide spraying in agriculture",
-    year: "2025"
+    year: "2025",
+    icon: <FaLightbulb />
   }
 ];
 
@@ -716,6 +713,9 @@ const Achievements = () => {
               onMouseEnter={() => handleAchievementHover(achievement.id)}
               onMouseLeave={handleAchievementLeave}
             >
+              <div className="achievement-icon">
+                {achievement.icon}
+              </div>
               <div className="achievement-content">
                 <h3>{achievement.title}</h3>
                 <p>{achievement.description}</p>
@@ -727,6 +727,184 @@ const Achievements = () => {
         </div>
       </div>
     </section>
+  );
+};
+
+// Enhanced Project Card Component
+const ProjectCard = ({ project, index }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current);
+      }
+    };
+  }, []);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    logger.log('project_hover', {
+      project: project.title,
+      timestamp: Date.now()
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  const handleProjectClick = () => {
+    if (project.url) {
+      logger.log('project_click', {
+        project: project.title,
+        url: project.url,
+        timestamp: Date.now()
+      });
+      window.open(project.url, '_blank');
+    }
+  };
+
+  return (
+    <div 
+      ref={cardRef}
+      className={`project-card ${isHovered ? 'hovered' : ''} ${isVisible ? 'visible' : ''}`}
+      style={{ animationDelay: `${index * 0.1}s` }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleProjectClick}
+    >
+      <div className="project-header">
+        {/* <div className="project-icon">
+          <Zap size={24} />
+        </div> */}
+        <h3 className="project-title">{project.title}</h3>
+        {project.url && (
+          <div className="project-link">
+            <FaExternalLinkAlt />
+          </div>
+        )}
+      </div>
+      <p className="project-description">{project.desc}</p>
+      <div className="project-tech-stack">
+        <span className="tech-tag">MERN</span>
+        <span className="tech-tag">React</span>
+        <span className="tech-tag">Node.js</span>
+      </div>
+      <div className="project-hover-content">
+        <div className="project-stats">
+          <div className="stat">
+            <Target size={16} />
+            <span>Completed</span>
+          </div>
+          <div className="stat">
+            <FaRocket size={16} />
+            <span>Live</span>
+          </div>
+        </div>
+      </div>
+      <div className="project-glow"></div>
+    </div>
+  );
+};
+
+// Enhanced Internship Card Component
+const InternshipCard = () => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current);
+      }
+    };
+  }, []);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    logger.log('internship_hover', { timestamp: Date.now() });
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  return (
+    <div 
+      ref={cardRef}
+      className={`internship-card ${isHovered ? 'hovered' : ''} ${isVisible ? 'visible' : ''}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="internship-header">
+        {/* <div className="company-logo">
+          <FaReact size={32} color="#61dafb" />
+        </div> */}
+        <div className="internship-info">
+          <h3 className="company-name">Biztron Softech Ltd.</h3>
+          <p className="internship-role">MERN Stack Intern</p>
+          <p className="internship-period">June 2024 - July 2024</p>
+        </div>
+      </div>
+      <div className="internship-content">
+        <p className="internship-description">
+          Gained hands-on experience in MongoDB, Express.js, React.js, and Node.js. 
+          Developed responsive and interactive user interfaces for social media platforms.
+        </p>
+        <div className="internship-skills">
+          <span className="skill-tag">MongoDB</span>
+          <span className="skill-tag">Express.js</span>
+          <span className="skill-tag">React.js</span>
+          <span className="skill-tag">Node.js</span>
+          <span className="skill-tag">REST APIs</span>
+        </div>
+      </div>
+      <div className="internship-stats">
+        <div className="stat-item">
+          <span className="stat-number">4</span>
+          <span className="stat-label">Weeks</span>
+        </div>
+        <div className="stat-item">
+          <span className="stat-number">5+</span>
+          <span className="stat-label">Projects</span>
+        </div>
+        <div className="stat-item">
+          <span className="stat-number">100%</span>
+          <span className="stat-label">Completion</span>
+        </div>
+      </div>
+      <div className="internship-glow"></div>
+    </div>
   );
 };
 
@@ -853,14 +1031,6 @@ const Portfolio = () => {
     });
   };
 
-  const handleProjectClick = (projectTitle, projectUrl) => {
-    logger.log('project_click', {
-      project: projectTitle,
-      url: projectUrl,
-      timestamp: Date.now()
-    });
-  };
-
   const handleSocialClick = (platform, url) => {
     logger.log('social_click', {
       platform: platform,
@@ -879,7 +1049,7 @@ const Portfolio = () => {
 
   const projects = [
     {
-      title: "REAL-TIME SIGN LANGUAGE TO SPEECH ON MULTIPLE LANGUAGES",
+      title: "Real-time Sign Language to Speech",
       desc: "Developed a real-time sign-language-to-speech system with multilingual translation and integrated eye-tracking for hands-free accessibility using standard, low-cost hardware",
     },
     {
@@ -893,7 +1063,7 @@ const Portfolio = () => {
       url: "https://github.com/kbhavaniprasad/Coupon-Distribution"
     },
     {
-      title: "AI-Powered Smart Drone System and Method for Precision Pesticide Spraying in Agriculture",
+      title: "AI-Powered Smart Drone System",
       desc: "Processed 50k+ crop images with CV models to detect infections.Designed spraying automation logic reducing pesticide use by 40%.Co-inventor in published patent for AI-driven drone spraying.",
     }
   ];
@@ -985,38 +1155,30 @@ const Portfolio = () => {
         </section>
 
         <section id="intern">
-          <h1>Internships</h1>
-          <div id="container">
-            <div id="box">
-              <h3>
-                I completed a MERN stack internship at Biztron Softech Ltd. from June 24 to July 20, 2024, where I gained hands-on experience in MongoDB, Express.js, React.js, and Node.js.
-              </h3>
-            </div>
+          <div className="section-header">
+            <h1>Internships</h1>
+            <p className="section-subtitle">Professional experience and hands-on learning</p>
+          </div>
+          <div className="internship-container">
+            <InternshipCard />
           </div>
         </section>
 
         <section id="project">
-          <h1>Projects</h1>
-          <div id="container">
-            {projects.map((proj, index) => (
-              <div id="box1" key={index}>
-                <h2 id="p1">{proj.title}</h2>
-                <h4 id="p">
-                  {proj.desc}
-                  {proj.url && (
-                    <a 
-                      href={proj.url} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      id="link-icon"
-                      onClick={() => handleProjectClick(proj.title, proj.url)}
-                    >
-                      <Link size={18} style={{ marginLeft: "8px", verticalAlign: "middle", color: "#fff" }} />
-                    </a>
-                  )}
-                </h4>
-              </div>
-            ))}
+          <div className="section-header">
+            <h1>Projects</h1>
+            <p className="section-subtitle">Innovative solutions and real-world applications</p>
+          </div>
+          <div className="projects-container">
+            <div className="projects-grid">
+              {projects.map((project, index) => (
+                <ProjectCard 
+                  key={index} 
+                  project={project} 
+                  index={index}
+                />
+              ))}
+            </div>
           </div>
         </section>
 
