@@ -281,18 +281,12 @@ body {
 }
 
 /* Technical Skills Section */
+/* Technical Skills Section - Updated */
 #technical-container {
   text-align: center;
   padding: 40px;
   margin-bottom: 20px;
   margin-top: 20px;
-}
-
-#technical-skills {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
 }
 
 #tech-item-hidden {
@@ -304,50 +298,201 @@ body {
   gap: 30px;
 }
 
-.skills {
+.skill-box {
+  width: 200px;
+  height: 250px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 20px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.skill {
-  text-align: center;
-}
-
-#content {
-  font-weight: bold;
-}
-
-.progress-circle {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: 3px solid white;
-  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
-  font-weight: bold;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
   position: relative;
-  background: conic-gradient(#007bff 0%, white 0%);
+  overflow: hidden;
+  cursor: pointer;
 }
 
-.progress-circle::before {
-  content: "";
+.skill-box::before {
+  content: '';
   position: absolute;
-  width: 38px;
-  height: 38px;
-  background-color: hsl(220, 100%, 11%);
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.skill-box:hover::before {
+  left: 100%;
+}
+
+.skill-box:hover {
+  transform: translateY(-10px);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.skill-box.animated {
+  animation: pulse 0.5s ease;
+}
+
+.skill-box.hovered {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.skill-icon-wrapper {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skill-icon {
+  font-size: 3rem;
+  transition: all 0.3s ease;
+  z-index: 2;
+  position: relative;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.progress-ring {
+  position: absolute;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease;
 }
 
-.skill .progress-circle {
-  transition: background 1s ease-in-out;
+.progress-ring::before {
+  content: '';
+  position: absolute;
+  width: 84px;
+  height: 84px;
+  background: hsl(220, 100%, 11%);
+  border-radius: 50%;
+  z-index: 1;
 }
 
+.progress-text {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: white;
+  z-index: 2;
+  position: relative;
+}
+
+.skill-info {
+  text-align: center;
+  width: 100%;
+}
+
+.skill-info h3 {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  color: white;
+}
+
+.skill-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  margin: 8px 0;
+  overflow: hidden;
+}
+
+.skill-progress {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+  position: relative;
+}
+
+.skill-progress::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.skill-info p {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+/* Responsive Design for Skills */
+@media (max-width: 768px) {
+  .skill-box {
+    width: 150px;
+    height: 200px;
+    padding: 15px;
+  }
+  
+  .skill-icon-wrapper {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .progress-ring {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .progress-ring::before {
+    width: 64px;
+    height: 64px;
+  }
+  
+  .skill-icon {
+    font-size: 2.5rem;
+  }
+  
+  .skill-info h3 {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #tech-item-hidden {
+    gap: 15px;
+  }
+  
+  .skill-box {
+    width: 130px;
+    height: 180px;
+    padding: 12px;
+  }
+  
+  .skill-icon {
+    font-size: 2rem;
+  }
+}
 /* Contact Section */
 input {
   width: 80%;
@@ -386,36 +531,89 @@ input {
   background-color: hsla(202, 91%, 35%, 1);
 }
 
-#contact-form {
-  background: white;
-  padding: 20px;
+#mail-btn {
+  width: 150px;
+  height: 50px;
   border-radius: 10px;
-  width: 300px;
-  margin: 0 auto;
-  display: none;
+  background-color: hsla(202, 91%, 45%, 0.9);
+  font-size: large;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  margin: 10px;
 }
 
-#contact-form input {
+#mail-btn:hover {
+  background-color: hsla(202, 91%, 35%, 1);
+  transform: scale(1.05);
+}
+
+#contact-form {
+  background: rgba(255, 255, 255, 0.979);
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 350px; /* Decreased from 500px to 350px */
+  margin: 20px auto;
+}
+
+#contact-form input, 
+#contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgb(0, 0, 0);
+  box-sizing: border-box; /* Added to prevent overflow */
+}
+
+#contact-form textarea {
+  min-height: 100px;
+}
+
+#contact-form button[type="submit"] {
   width: 100%;
   padding: 10px;
   margin-top: 10px;
-  border: 1px solid black;
-  border-radius: 5px;
-}
-
-#contact-form button {
-  width: 100%;
-  margin-top: 15px;
-  padding: 10px;
   border-radius: 5px;
   background-color: hsla(202, 91%, 45%, 0.9);
   color: white;
   border: none;
   cursor: pointer;
+  transition: 0.3s;
 }
 
-#contact-form button:hover {
+#contact-form button[type="submit"]:hover {
   background-color: hsla(202, 91%, 35%, 1);
+}
+
+#contact-form button[type="submit"]:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
+/* Alert styles for success/error messages */
+.alert {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.alert.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.alert.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
 }
 
 /* Responsive Design */

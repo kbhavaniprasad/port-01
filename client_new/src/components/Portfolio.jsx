@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import './style.css';
-import profileImage from "../assets/me.jpg";
+import profileImage from "../assets/photo.png";
 import resumePDF from "../assets/resume.pdf";
-import { FaLinkedin, FaInstagram } from "react-icons/fa";
+import { FaLinkedin, FaInstagram, FaJava, FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaDatabase } from "react-icons/fa";
 import { Link } from "lucide-react";
 
 // Backend URL configuration
@@ -49,60 +49,50 @@ class PortfolioLogger {
 const logger = new PortfolioLogger();
 
 const skills = [
-  { skill: "C", percent: 85 },
-  { skill: "Java", percent: 75 },
-  { skill: "HTML", percent: 90 },
-  { skill: "CSS", percent: 85 },
-  { skill: "JavaScript", percent: 80 },
-  { skill: "MERN Stack", percent: 70 }
+  { skill: "Java", icon: <FaJava />, color: "#f89820" },
+  { skill: "HTML", icon: <FaHtml5 />, color: "#e34f26" },
+  { skill: "CSS", icon: <FaCss3Alt />, color: "#1572b6" },
+  { skill: "JavaScript", icon: <FaJs />, color: "#f7df1e" },
+  { skill: "React", icon: <FaReact />, color: "#61dafb" },
+  { skill: "Node.js", icon: <FaNodeJs />, color: "#68a063" },
+  { skill: "MongoDB", icon: <FaDatabase />, color: "#47a248" }
 ];
 
 const TechnicalSkills = () => {
   const [hoveredSkill, setHoveredSkill] = useState(null);
-  const [progress, setProgress] = useState({});
 
-  const handleMouseEnter = (index, percent) => {
+  const handleMouseEnter = (index) => {
     setHoveredSkill(index);
-    setProgress((prev) => ({ ...prev, [index]: 0 }));
     
     // Log skill hover
     logger.log('skill_hover', {
       skill: skills[index].skill,
-      percent: percent,
       timestamp: Date.now()
     });
-    
-    setTimeout(() => {
-      setProgress((prev) => ({ ...prev, [index]: percent }));
-    }, 50);
   };
 
   const handleMouseLeave = (index) => {
     setHoveredSkill(null);
-    setProgress((prev) => ({ ...prev, [index]: 0 }));
   };
 
   return (
     <section id="technical-container">
       <h1>Technical Skills</h1>
-      <div id="tech-item-hidden">
+      <div id="skills-grid">
         {skills.map((item, index) => (
           <div
-            className="skill"
+            className={`skill-card ${hoveredSkill === index ? 'hovered' : ''}`}
             key={index}
-            onMouseEnter={() => handleMouseEnter(index, item.percent)}
+            onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={() => handleMouseLeave(index)}
           >
-            <div
-              className="progress-circle"
-              style={{
-                transition: "background 0.2s ease-in-out",
-                background: `conic-gradient(#007bff ${progress[index] || 0}%, white ${progress[index] || 0}%)`
-              }}
+            <div 
+              className="skill-icon"
+              style={{ color: item.color }}
             >
-              {item.percent}%
+              {item.icon}
             </div>
-            <p>{item.skill} ({item.percent}%)</p>
+            <h3 className="skill-name">{item.skill}</h3>
           </div>
         ))}
       </div>
@@ -259,9 +249,9 @@ const Portfolio = () => {
 
   const projects = [
     {
-      title: "MediKart",
-      desc: "Designed and developed a dynamic, real-time web application for online medicine ordering using PHP, HTML,JavaScript and React, featuring interactive user interfaces, responsive design, and seamless functionality for browsing, ordering, and managing medical products online.",
-      url: "https://github.com/kbhavaniprasad/MEDIKART-PHP-"
+      title: "REAL-TIME SIGN LANGUAGE TO SPEECH ON MULTIPLE LANGUAGES",
+      desc: "Developed a real-time sign-language-to-speech system with multilingual translation and integrated eye-tracking for hands-free accessibility using standard, low-cost hardware",
+      //url: "https://github.com/kbhavaniprasad/MEDIKART-PHP-"
     },
     {
       title: "Task Manager",
@@ -272,6 +262,11 @@ const Portfolio = () => {
       title: "Coupon Distribution (MERN)",
       desc: "A live web application for round-robin coupon distribution with abuse prevention, ensuring fair allocation through IP and cookie tracking while allowing guest access and providing user feedback.",
       url: "https://github.com/kbhavaniprasad/Coupon-Distribution"
+    },
+    {
+      title: "AI-Powered Smart Drone System and Method for Precision Pesticide Spraying in Agriculture",
+      desc: "Processed 50k+ crop images with CV models to detect infections.Designed spraying automation logic reducing pesticide use by 40%.Co-inventor in published patent for AI-driven drone spraying.",
+      //url:""
     }
   ];
 
@@ -378,15 +373,17 @@ const Portfolio = () => {
                 <h2 id="p1">{proj.title}</h2>
                 <h4 id="p">
                   {proj.desc}
-                  <a 
-                    href={proj.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    id="link-icon"
-                    onClick={() => handleProjectClick(proj.title, proj.url)}
-                  >
-                    <Link size={18} style={{ marginLeft: "8px", verticalAlign: "middle", color: "#fff" }} />
-                  </a>
+                  {proj.url && (
+                    <a 
+                      href={proj.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      id="link-icon"
+                      onClick={() => handleProjectClick(proj.title, proj.url)}
+                    >
+                      <Link size={18} style={{ marginLeft: "8px", verticalAlign: "middle", color: "#fff" }} />
+                    </a>
+                  )}
                 </h4>
               </div>
             ))}
