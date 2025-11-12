@@ -6,7 +6,7 @@ import { FaLinkedin, FaInstagram, FaJava, FaHtml5, FaCss3Alt, FaJs, FaReact, FaN
 import { Link } from "lucide-react";
 
 // Backend URL configuration
-const API_BASE_URL = 'https://portfolio-backend-66zq.onrender.com';
+const API_BASE_URL = 'https://portfolio-backend-l2ar.onrender.com';
 
 // Logger class
 class PortfolioLogger {
