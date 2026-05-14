@@ -16,9 +16,25 @@ nav a {
 }
 
 body {
-  background-color: hsl(220, 100%, 11%);
+  background: linear-gradient(135deg, hsl(220, 100%, 11%), hsl(240, 80%, 15%), hsl(280, 50%, 10%));
+  background-attachment: fixed;
   color: white;
   line-height: 1.6;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(97, 218, 251, 0.5);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(97, 218, 251, 0.8);
 }
 
 /* Header and Navbar */
@@ -30,11 +46,16 @@ body {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 60px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  padding: 10px 20px;
-  cursor: pointer;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 10px 30px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 10px;
+  z-index: 100;
 }
 
 #hh {
@@ -53,10 +74,11 @@ body {
   content: "";
   position: absolute;
   left: 50%;
-  bottom: -5px;
+  bottom: -8px;
   width: 0;
-  height: 2px;
-  background-color: white;
+  height: 3px;
+  background: linear-gradient(90deg, #61dafb, #ffd700);
+  border-radius: 3px;
   transition: width 0.4s ease-out, left 0.4s ease-out;
 }
 
@@ -281,18 +303,19 @@ body {
 }
 
 .project-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 30px;
-  transition: all 0.4s ease;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  padding: 35px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   cursor: pointer;
   opacity: 0;
   transform: translateY(30px);
   animation: slideUpFade 0.6s ease forwards;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .project-card.visible {
@@ -461,17 +484,18 @@ body {
 }
 
 .internship-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
   padding: 40px;
-  transition: all 0.4s ease;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   opacity: 0;
   transform: translateY(30px);
   animation: slideUpFade 0.6s ease 0.2s forwards;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .internship-card.visible {
@@ -670,17 +694,19 @@ body {
 .skill-card {
   width: 200px;
   height: 200px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .skill-card::before {
@@ -782,15 +808,16 @@ body {
 }
 
 .certification-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 25px;
-  transition: all 0.4s ease;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  padding: 30px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .certification-card::before {
@@ -928,15 +955,16 @@ body {
 }
 
 .achievement-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  padding: 30px 25px;
-  transition: all 0.4s ease;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  padding: 35px 30px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   text-align: left;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .achievement-card::before {

@@ -462,13 +462,13 @@ import React, { useState, useEffect, useRef } from "react";
 import './style.css';
 import profileImage from "../assets/photo.png";
 import resumePDF from "../assets/resume.pdf";
-import { FaLinkedin, FaInstagram, FaJava, FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaDatabase, FaExternalLinkAlt, FaRocket, FaMedal, FaTrophy, FaLightbulb } from "react-icons/fa";
+import { FaLinkedin, FaInstagram, FaJava, FaPython, FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaDatabase, FaExternalLinkAlt, FaRocket, FaMedal, FaTrophy, FaLightbulb, FaEnvelope, FaCheck, FaExclamationTriangle } from "react-icons/fa";
 import { Link, Zap, Target } from "lucide-react";
 
 // Backend URL configuration
 const API_BASE_URL = 'https://portfolio-backend-l2ar.onrender.com';
 
-// Logger class
+// Enhanced Logger class with better error handling
 class PortfolioLogger {
   constructor() {
     this.events = [];
@@ -477,7 +477,7 @@ class PortfolioLogger {
   }
   
   generateSessionId() {
-    return 'session_' + Math.random().toString(36).substr(2, 9);
+    return 'session_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
   }
   
   log(event, data = {}) {
@@ -493,15 +493,31 @@ class PortfolioLogger {
     this.events.push(logEntry);
     this.sendToServer(logEntry);
     
-    console.log('📊 Portfolio Log:', logEntry);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('📊 Portfolio Log:', logEntry);
+    }
   }
   
-  sendToServer(entry) {
-    fetch(`${API_BASE_URL}/api/log`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(entry)
-    }).catch(err => console.warn('Logging failed:', err));
+  async sendToServer(entry) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/log`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(entry)
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+    } catch (error) {
+      // Silently fail for logging errors to avoid disrupting user experience
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Logging failed:', error);
+      }
+    }
   }
 }
 
@@ -510,46 +526,47 @@ const logger = new PortfolioLogger();
 
 const skills = [
   { skill: "Java", icon: <FaJava />, color: "#f89820" },
+  { skill: "Python", icon: <FaPython />, color: "#3776AB" },
   { skill: "HTML", icon: <FaHtml5 />, color: "#e34f26" },
   { skill: "CSS", icon: <FaCss3Alt />, color: "#1572b6" },
   { skill: "JavaScript", icon: <FaJs />, color: "#f7df1e" },
   { skill: "React", icon: <FaReact />, color: "#61dafb" },
   { skill: "Node.js", icon: <FaNodeJs />, color: "#68a063" },
-  { skill: "MongoDB", icon: <FaDatabase />, color: "#47a248" }
+  { skill: "MongoDB", icon: <FaDatabase />, color: "#47a248" },
+  { skill: "SQL", icon: <FaDatabase />, color: "#336791" }
 ];
 
-// Certification images
 const certificationsData = [
   {
     id: 1,
     title: "AWS Certified Cloud Practitioner",
     issuer: "Amazon Web Services",
-    date: "2025–2028",
+    date: "2025",
     image: "/assets/certifications/aws-cert.jpg",
     credentialUrl: "#"
   },
   {
     id: 2,
-    title: "Intro to Data Science with Python",
-    issuer: "HarvardX",
-    date: "2024",
-    image: "/assets/certifications/harvard-cert.jpg",
-    credentialUrl: "#"
-  },
-  {
-    id: 3,
     title: "Salesforce Developer",
-    issuer: "SmartBridge AgentBlazer Program",
+    issuer: "SmartBridge",
     date: "2025",
     image: "/assets/certifications/salesforce-cert.jpg",
     credentialUrl: "#"
   },
   {
-    id: 4,
+    id: 3,
     title: "Smart Coder Certification",
     issuer: "Smart Interviews",
     date: "2024",
     image: "/assets/certifications/smartcoder-cert.jpg",
+    credentialUrl: "#"
+  },
+  {
+    id: 4,
+    title: "ServiceNow CSA Certified",
+    issuer: "ServiceNow",
+    date: "2025",
+    image: "/assets/certifications/servicenow-cert.jpg",
     credentialUrl: "#"
   }
 ];
@@ -557,15 +574,22 @@ const certificationsData = [
 const achievementsData = [
   {
     id: 1,
-    title: "AI National Hackathon Winner",
-    description: "Winner at VR Siddhartha College for ML-based smart drone prototype",
+    title: "National Level AI Hackathon Winner",
+    description: "Winner at VR Siddhartha College for ML-based smart drone prototype.",
     year: "2025",
     icon: <FaTrophy />
   },
   {
     id: 2,
-    title: "Patent Published - AI-Powered Smart Drone System",
-    description: "Co-inventor in published patent for AI-driven drone spraying system for precision pesticide spraying in agriculture",
+    title: "Research Paper Accepted",
+    description: "Research paper accepted and presented at ICICT Conference; received proceedings and certification.",
+    year: "2025",
+    icon: <FaMedal />
+  },
+  {
+    id: 3,
+    title: "Patent Published",
+    description: "Published patent on AI-based precision pesticide spraying system.",
     year: "2025",
     icon: <FaLightbulb />
   }
@@ -790,9 +814,6 @@ const ProjectCard = ({ project, index }) => {
       onClick={handleProjectClick}
     >
       <div className="project-header">
-        {/* <div className="project-icon">
-          <Zap size={24} />
-        </div> */}
         <h3 className="project-title">{project.title}</h3>
         {project.url && (
           <div className="project-link">
@@ -823,8 +844,32 @@ const ProjectCard = ({ project, index }) => {
   );
 };
 
+const internshipsData = [
+  {
+    company: "Biztron Softech Ltd.",
+    role: "MERN Stack Intern",
+    period: "Jun 2024 - Jul 2024",
+    description: "Developed reusable React components and improved UI responsiveness. Integrated REST APIs and optimized application performance.",
+    skills: ["MongoDB", "Express.js", "React.js", "Node.js", "REST APIs"]
+  },
+  {
+    company: "SmartBridge (APSCHE)",
+    role: "AI & ML Virtual Intern",
+    period: "Jan 2025 - Apr 2025",
+    description: "Learned supervised and unsupervised learning techniques with practical implementation. Performed data preprocessing, feature engineering, and model evaluation. Developed an end-to-end machine learning project.",
+    skills: ["Python", "Machine Learning", "Data Preprocessing", "Feature Engineering"]
+  },
+  {
+    company: "SmartBridge",
+    role: "Salesforce Developer Intern",
+    period: "May 2025 - Jul 2025",
+    description: "Developed Lightning Web Components and Apex-based backend logic. Implemented business workflows using Salesforce platform tools.",
+    skills: ["Salesforce", "LWC", "Apex"]
+  }
+];
+
 // Enhanced Internship Card Component
-const InternshipCard = () => {
+const InternshipCard = ({ internship }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef(null);
@@ -852,7 +897,7 @@ const InternshipCard = () => {
 
   const handleMouseEnter = () => {
     setIsHovered(true);
-    logger.log('internship_hover', { timestamp: Date.now() });
+    logger.log('internship_hover', { company: internship.company, timestamp: Date.now() });
   };
 
   const handleMouseLeave = () => {
@@ -867,40 +912,20 @@ const InternshipCard = () => {
       onMouseLeave={handleMouseLeave}
     >
       <div className="internship-header">
-        {/* <div className="company-logo">
-          <FaReact size={32} color="#61dafb" />
-        </div> */}
         <div className="internship-info">
-          <h3 className="company-name">Biztron Softech Ltd.</h3>
-          <p className="internship-role">MERN Stack Intern</p>
-          <p className="internship-period">June 2024 - July 2024</p>
+          <h3 className="company-name">{internship.company}</h3>
+          <p className="internship-role">{internship.role}</p>
+          <p className="internship-period">{internship.period}</p>
         </div>
       </div>
       <div className="internship-content">
         <p className="internship-description">
-          Gained hands-on experience in MongoDB, Express.js, React.js, and Node.js. 
-          Developed responsive and interactive user interfaces for social media platforms.
+          {internship.description}
         </p>
         <div className="internship-skills">
-          <span className="skill-tag">MongoDB</span>
-          <span className="skill-tag">Express.js</span>
-          <span className="skill-tag">React.js</span>
-          <span className="skill-tag">Node.js</span>
-          <span className="skill-tag">REST APIs</span>
-        </div>
-      </div>
-      <div className="internship-stats">
-        <div className="stat-item">
-          <span className="stat-number">4</span>
-          <span className="stat-label">Weeks</span>
-        </div>
-        <div className="stat-item">
-          <span className="stat-number">5+</span>
-          <span className="stat-label">Projects</span>
-        </div>
-        <div className="stat-item">
-          <span className="stat-number">100%</span>
-          <span className="stat-label">Completion</span>
+          {internship.skills.map((skill, index) => (
+            <span key={index} className="skill-tag">{skill}</span>
+          ))}
         </div>
       </div>
       <div className="internship-glow"></div>
@@ -908,12 +933,103 @@ const InternshipCard = () => {
   );
 };
 
+// Enhanced Contact Form Component
+const ContactForm = ({ onSubmit, isLoading, status }) => {
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(formData);
+  };
+
+  return (
+    <div id="contact-form">
+      {status && (
+        <div className={`alert ${status.success ? 'success' : 'error'}`}>
+          <div className="alert-icon">
+            {status.success ? <FaCheck /> : <FaExclamationTriangle />}
+          </div>
+          <div className="alert-content">
+            <strong>{status.success ? 'Success!' : 'Error'}</strong>
+            <p>{status.message}</p>
+          </div>
+        </div>
+      )}
+      
+      <form onSubmit={handleSubmit}>
+        <h3>
+          <FaEnvelope style={{ marginRight: '10px' }} />
+          Send me a message
+        </h3>
+        
+        <div className="form-group">
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Your Name"
+            required
+            disabled={isLoading}
+          />
+        </div>
+        
+        <div className="form-group">
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Your Email"
+            required
+            disabled={isLoading}
+          />
+        </div>
+        
+        <div className="form-group">
+          <textarea
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            placeholder="Your Message..."
+            required
+            rows="6"
+            disabled={isLoading}
+          />
+        </div>
+        
+        <button type="submit" disabled={isLoading} className="submit-btn">
+          {isLoading ? (
+            <>
+              <div className="spinner"></div>
+              Sending...
+            </>
+          ) : (
+            <>
+              <FaEnvelope style={{ marginRight: '8px' }} />
+              Send Message
+            </>
+          )}
+        </button>
+        
+        <div className="form-footer">
+          <p>💡 I'll get back to you within 24 hours</p>
+        </div>
+      </form>
+    </div>
+  );
+};
+
 const Portfolio = () => {
   const [contactType, setContactType] = useState(null);
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+  const [backendHealth, setBackendHealth] = useState(null);
 
   // Log page view on component mount
   useEffect(() => {
@@ -922,6 +1038,9 @@ const Portfolio = () => {
       timestamp: Date.now(),
       referrer: document.referrer || 'direct'
     });
+
+    // Check backend health
+    checkBackendHealth();
 
     // Log performance metrics
     if (window.performance && window.performance.timing) {
@@ -934,12 +1053,29 @@ const Portfolio = () => {
     }
   }, []);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const checkBackendHealth = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/health`);
+      const data = await response.json();
+      setBackendHealth(data);
+      
+      logger.log('health_check', {
+        status: data.success ? 'healthy' : 'unhealthy',
+        environment: data.environment,
+        emailConfigured: data.emailConfigured
+      });
+    } catch (error) {
+      console.warn('Backend health check failed:', error);
+      setBackendHealth({ success: false, error: error.message });
+      
+      logger.log('health_check_failed', {
+        error: error.message,
+        timestamp: Date.now()
+      });
+    }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleFormSubmit = async (formData) => {
     setIsLoading(true);
     setSubmitStatus(null);
 
@@ -953,7 +1089,10 @@ const Portfolio = () => {
     try {
       const response = await fetch(`${API_BASE_URL}/api/send-email`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
         body: JSON.stringify(formData),
       });
 
@@ -967,19 +1106,19 @@ const Portfolio = () => {
       logger.log('contact_form_success', {
         name: formData.name,
         email: formData.email,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        message: data.message
       });
 
       setSubmitStatus({ success: true, message: data.message });
-      setFormData({ name: "", email: "", message: "" });
       
-      // Auto-hide success message after 5 seconds
+      // Auto-hide success message after 8 seconds
       setTimeout(() => {
         setSubmitStatus(null);
-      }, 5000);
+      }, 8000);
 
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Contact form error:", error);
       
       // Log error
       logger.log('contact_form_error', {
@@ -989,7 +1128,10 @@ const Portfolio = () => {
         timestamp: Date.now()
       });
 
-      setSubmitStatus({ success: false, message: error.message });
+      setSubmitStatus({ 
+        success: false, 
+        message: error.message || 'Failed to send message. Please try again later or email me directly at kolaprasad001@gmail.com'
+      });
     } finally {
       setIsLoading(false);
     }
@@ -1049,22 +1191,17 @@ const Portfolio = () => {
 
   const projects = [
     {
-      title: "Real-time Sign Language to Speech",
-      desc: "Developed a real-time sign-language-to-speech system with multilingual translation and integrated eye-tracking for hands-free accessibility using standard, low-cost hardware",
-    },
-    {
-      title: "Task Manager",
-      desc: "A Task Manager is a tool that helps users create, track, edit, and organize tasks efficiently, improving productivity. It typically includes features like task prioritization, deadlines, status tracking, and collaboration options.",
-      url: "https://github.com/kbhavaniprasad/Task-Manager"
-    },
-    {
-      title: "Coupon Distribution (MERN)",
-      desc: "A live web application for round-robin coupon distribution with abuse prevention, ensuring fair allocation through IP and cookie tracking while allowing guest access and providing user feedback.",
-      url: "https://github.com/kbhavaniprasad/Coupon-Distribution"
+      title: "Real-Time Sign Language Recognition",
+      desc: "Developed CBAM-enhanced MobileNetV2 model with MediaPipe keypoint fusion. Achieved 98.8% accuracy with real-time CPU inference (50–100 ms latency). Designed dual-branch architecture combining visual and geometric features.",
     },
     {
       title: "AI-Powered Smart Drone System",
-      desc: "Processed 50k+ crop images with CV models to detect infections.Designed spraying automation logic reducing pesticide use by 40%.Co-inventor in published patent for AI-driven drone spraying.",
+      desc: "Processed 50,000+ images for pest detection using computer vision. Implemented precision spraying system reducing pesticide overuse. Co-inventor of a published patent.",
+    },
+    {
+      title: "Coupon Distribution Platform (MERN)",
+      desc: "Built full-stack system with secure authentication and fair allocation logic, ensuring round-robin coupon distribution with abuse prevention.",
+      url: "https://github.com/kbhavaniprasad/Coupon-Distribution"
     }
   ];
 
@@ -1080,8 +1217,20 @@ const Portfolio = () => {
       });
     };
 
+    const handleUnhandledRejection = (event) => {
+      logger.log('unhandled_promise_rejection', {
+        reason: event.reason?.message || event.reason,
+        timestamp: Date.now()
+      });
+    };
+
     window.addEventListener('error', handleError);
-    return () => window.removeEventListener('error', handleError);
+    window.addEventListener('unhandledrejection', handleUnhandledRejection);
+    
+    return () => {
+      window.removeEventListener('error', handleError);
+      window.removeEventListener('unhandledrejection', handleUnhandledRejection);
+    };
   }, []);
 
   return (
@@ -1160,7 +1309,11 @@ const Portfolio = () => {
             <p className="section-subtitle">Professional experience and hands-on learning</p>
           </div>
           <div className="internship-container">
-            <InternshipCard />
+            <div className="internships-grid">
+              {internshipsData.map((internship, index) => (
+                <InternshipCard key={index} internship={internship} />
+              ))}
+            </div>
           </div>
         </section>
 
@@ -1196,47 +1349,26 @@ const Portfolio = () => {
               id="mail-btn"
               onClick={handleContactButtonClick}
             >
-              Mail
+              <FaEnvelope style={{ marginRight: '8px' }} />
+              Send Message
             </button>
           </div>
 
           {contactType === "mail" && (
-            <div id="contact-form" style={{ display: "block", margin: "0 auto", maxWidth: "350px" }}>
-              {submitStatus && (
-                <div className={`alert ${submitStatus.success ? 'success' : 'error'}`}>
-                  {submitStatus.message}
-                </div>
-              )}
-              <form onSubmit={handleSubmit}>
-                <h3>Send me an email</h3>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Your Name"
-                  required
-                />
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Your Email"
-                  required
-                />
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Your Message"
-                  required
-                  rows="5"
-                />
-                <button type="submit" disabled={isLoading}>
-                  {isLoading ? "Sending..." : "Send Message"}
-                </button>
-              </form>
+            <ContactForm 
+              onSubmit={handleFormSubmit}
+              isLoading={isLoading}
+              status={submitStatus}
+            />
+          )}
+          
+          {/* Backend status indicator (hidden in production) */}
+          {process.env.NODE_ENV === 'development' && backendHealth && (
+            <div className="backend-status">
+              <small>
+                Backend: {backendHealth.success ? '✅ Healthy' : '❌ Unhealthy'}
+                {backendHealth.emailConfigured && ' | 📧 Email Configured'}
+              </small>
             </div>
           )}
         </section>
