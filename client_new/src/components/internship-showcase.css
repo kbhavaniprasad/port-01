@@ -9,7 +9,7 @@
   --compact-width: 140px;
   --expanded-width: 920px;
   --card-height: 520px;
-  --card-overlap: -18px;
+  --card-overlap: -10px;
   font-family: 'Inter', sans-serif;
 }
 
@@ -160,8 +160,22 @@ body {
   white-space: nowrap;
 }
 
-.is-strip {
+/* .is-strip {
   width: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  overflow: visible;
+  padding: 6px 12px 0;
+}
+*/
+
+.is-strip {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -426,6 +440,9 @@ body {
   font-size: 0.98rem;
   line-height: 1.8;
   color: rgba(255, 255, 255, 0.76);
+  text-align: justify;          /* ADD THIS */
+  text-justify: inter-word;     /* ADD THIS */
+
 }
 
 .is-section-block {
