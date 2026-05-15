@@ -464,6 +464,7 @@ import profileImage from "../assets/photo.png";
 import resumePDF from "../assets/resume.pdf";
 import { FaLinkedin, FaInstagram, FaJava, FaPython, FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaDatabase, FaExternalLinkAlt, FaRocket, FaMedal, FaTrophy, FaLightbulb, FaEnvelope, FaCheck, FaExclamationTriangle } from "react-icons/fa";
 import { Link, Zap, Target } from "lucide-react";
+import InternshipShowcase from './InternshipShowcase';
 
 // Backend URL configuration
 const API_BASE_URL = 'https://portfolio-backend-l2ar.onrender.com';
@@ -823,9 +824,9 @@ const ProjectCard = ({ project, index }) => {
       </div>
       <p className="project-description">{project.desc}</p>
       <div className="project-tech-stack">
-        <span className="tech-tag">MERN</span>
-        <span className="tech-tag">React</span>
-        <span className="tech-tag">Node.js</span>
+        {(project.tech || ["MERN", "React", "Node.js"]).map((tag, idx) => (
+          <span key={idx} className="tech-tag">{tag}</span>
+        ))}
       </div>
       <div className="project-hover-content">
         <div className="project-stats">
@@ -1193,15 +1194,31 @@ const Portfolio = () => {
     {
       title: "Real-Time Sign Language Recognition",
       desc: "Developed CBAM-enhanced MobileNetV2 model with MediaPipe keypoint fusion. Achieved 98.8% accuracy with real-time CPU inference (50–100 ms latency). Designed dual-branch architecture combining visual and geometric features.",
+      url:"https://github.com/kbhavaniprasad/Sign-Language-To-Text-and-Speech-Conversion-1-",
+      tech: ["Python"]
     },
     {
       title: "AI-Powered Smart Drone System",
       desc: "Processed 50,000+ images for pest detection using computer vision. Implemented precision spraying system reducing pesticide overuse. Co-inventor of a published patent.",
+      tech: ["Python"]
     },
     {
       title: "Coupon Distribution Platform (MERN)",
       desc: "Built full-stack system with secure authentication and fair allocation logic, ensuring round-robin coupon distribution with abuse prevention.",
-      url: "https://github.com/kbhavaniprasad/Coupon-Distribution"
+      url: "https://github.com/kbhavaniprasad/Coupon-Distribution",
+      tech: ["MERN", "React", "Node.js"]
+    },
+    {
+      title:"API KEY Management System",
+      desc:"API Key Vault is a secure MERN stack web application for storing and managing API keys in one centralized platform. It features user authentication, protected dashboards, API key masking with show/hide toggle, copy-to-clipboard functionality, and categorized key management using Name, Value, and Purpose fields. Built with React.js, Tailwind CSS, Node.js, Express.js, and MongoDB, the application provides a modern, responsive, and secure developer-focused interface.",
+      url:"https://api-keys-chi.vercel.app/",
+      tech: ["MERN", "React", "Node.js"]
+    },
+    {
+      title:"Audio Evaluating System",
+      desc:"AI Audio Transcription & Evaluation Agent is an n8n-based automation system that transcribes audio conversations, analyzes interactions using AI, evaluates employee performance against company-defined rules, generates evaluation metrics, and produces concise conversation summaries with performance insights.",
+      url:"https://audio-transcripting.vercel.app/",
+      tech: ["n8n", "AI", "Node.js"]
     }
   ];
 
@@ -1303,19 +1320,7 @@ const Portfolio = () => {
           </div>
         </section>
 
-        <section id="intern">
-          <div className="section-header">
-            <h1>Internships</h1>
-            <p className="section-subtitle">Professional experience and hands-on learning</p>
-          </div>
-          <div className="internship-container">
-            <div className="internships-grid">
-              {internshipsData.map((internship, index) => (
-                <InternshipCard key={index} internship={internship} />
-              ))}
-            </div>
-          </div>
-        </section>
+        <InternshipShowcase />
 
         <section id="project">
           <div className="section-header">
