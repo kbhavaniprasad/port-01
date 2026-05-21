@@ -260,7 +260,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowRight,
   Atom,
-  BarChart3,
   Braces,
   BrainCircuit,
   CalendarDays,
@@ -271,15 +270,15 @@ import {
   Leaf,
   MousePointerClick,
   Palette,
-  ShieldCheck,
   Smartphone,
   Workflow,
   Wind,
-  Bot,
-  ScanSearch,
   Blocks,
 } from 'lucide-react';
 import './internship-showcase.css';
+import biztronLogo from '../assets/logos/biztron.png';
+import smartbridgeLogo from '../assets/logos/smartbridge.png';
+import salesforceLogo from '../assets/logos/salesforce.svg';
 
 const internships = [
   {
@@ -292,10 +291,7 @@ const internships = [
     skills: ['MongoDB', 'Express.js', 'React', 'Node.js', 'Tailwind CSS'],
     accent: '#7c6cff',
     glow: 'rgba(124, 108, 255, 0.26)',
-    logoGradient:
-      'linear-gradient(120deg, #f59e0b 0%, #ef4444 35%, #d946ef 68%, #8b5cf6 100%)',
-    logoBg: 'linear-gradient(180deg, rgba(255,255,255,0.96), rgba(236,240,248,0.82))',
-    logoBorder: 'rgba(255,255,255,0.55)',
+    logo: biztronLogo,
     number: '01',
   },
   {
@@ -309,15 +305,13 @@ const internships = [
     skills: ['Python', 'Pandas', 'Machine Learning'],
     accent: '#8b5cf6',
     glow: 'rgba(139, 92, 246, 0.22)',
-    logoGradient: 'linear-gradient(180deg, #1f2937 0%, #0f172a 100%)',
-    logoBg: 'linear-gradient(180deg, rgba(255,255,255,0.96), rgba(236,240,248,0.82))',
-    logoBorder: 'rgba(255,255,255,0.45)',
+    logo: smartbridgeLogo,
     number: '02',
   },
   {
     id: 3,
-    company: 'SmartBridge',
-    shortName: 'SmartBridge',
+    company: 'Salesforce',
+    shortName: 'Salesforce',
     role: 'Salesforce Developer Intern',
     period: 'May 2025 – Jul 2025',
     description:
@@ -325,9 +319,7 @@ const internships = [
     skills: ['Salesforce', 'Apex', 'Lightning Web Components (LWC)', 'JavaScript'],
     accent: '#6d7cff',
     glow: 'rgba(109, 124, 255, 0.22)',
-    logoGradient: 'linear-gradient(180deg, #1f2937 0%, #0f172a 100%)',
-    logoBg: 'linear-gradient(180deg, rgba(255,255,255,0.96), rgba(236,240,248,0.82))',
-    logoBorder: 'rgba(255,255,255,0.45)',
+    logo: salesforceLogo,
     number: '03',
   },
 ];
@@ -371,16 +363,18 @@ function TechChip({ label, accent }) {
 }
 
 function LogoMark({ item, size = 'small' }) {
+  // Derive a company slug for per-logo padding adjustments
+  const companySlug = item.company.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
   return (
-    <div
-      className={`is-logo-mark is-logo-mark--${size}`}
-      style={{
-        '--logo-gradient': item.logoGradient,
-        '--logo-bg': item.logoBg,
-        '--logo-border': item.logoBorder,
-      }}
-    >
-      <span>{item.shortName}</span>
+    <div className={`is-logo-mark is-logo-mark--${size} is-logo-mark--${companySlug}`}>
+      <img
+        src={item.logo}
+        alt={item.company}
+        className="is-logo-image"
+        loading="eager"
+        decoding="async"
+        draggable={false}
+      />
     </div>
   );
 }
@@ -406,7 +400,7 @@ const InternshipShowcase = () => {
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
           <h2 className="is-title">
-            Internship <span>Showcase</span>
+            Internship
           </h2>
           <p className="is-subtitle">
             A glimpse of my internship experiences and the impact I made.

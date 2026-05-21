@@ -1,0 +1,25 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" rx="36" fill="#0d0d1a"/>
+  <defs>
+    <linearGradient id="sbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#5b21b6"/>
+    </linearGradient>
+    <linearGradient id="sbAcc" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <!-- Bridge arches -->
+  <path d="M30,140 Q60,60 100,80 Q140,60 170,140" fill="none" stroke="url(#sbGrad)" stroke-width="14" stroke-linecap="round"/>
+  <path d="M30,140 Q60,88 100,104 Q140,88 170,140" fill="none" stroke="url(#sbGrad)" stroke-width="8" stroke-linecap="round" opacity="0.6"/>
+  <!-- Bridge deck -->
+  <rect x="28" y="138" width="144" height="8" rx="4" fill="url(#sbAcc)"/>
+  <!-- Support pillars -->
+  <rect x="62" y="104" width="8" height="34" rx="3" fill="url(#sbAcc)" opacity="0.8"/>
+  <rect x="130" y="104" width="8" height="34" rx="3" fill="url(#sbAcc)" opacity="0.8"/>
+  <!-- Text -->
+  <text x="100" y="180" font-size="22" font-weight="800" text-anchor="middle" fill="rgba(167,139,250,0.9)" font-family="Arial, sans-serif" letter-spacing="1">SmartBridge</text>
+  <!-- Top accent dot -->
+  <circle cx="100" cy="60" r="7" fill="url(#sbAcc)" opacity="0.85"/>
+</svg>

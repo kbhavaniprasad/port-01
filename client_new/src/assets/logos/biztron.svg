@@ -1,0 +1,21 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" rx="36" fill="#0d0d1a"/>
+  <defs>
+    <linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c6cff"/>
+      <stop offset="100%" stop-color="#4f3fcf"/>
+    </linearGradient>
+    <linearGradient id="acc1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#7c6cff"/>
+    </linearGradient>
+  </defs>
+  <!-- Hexagon emblem -->
+  <polygon points="100,26 160,60 160,130 100,164 40,130 40,60" fill="url(#bg1)" opacity="0.92"/>
+  <!-- Inner highlight ring -->
+  <polygon points="100,38 148,65 148,120 100,147 52,120 52,65" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
+  <!-- Letter B -->
+  <text x="100" y="118" font-size="70" font-weight="900" text-anchor="middle" fill="white" font-family="Arial Black, Arial, sans-serif" letter-spacing="-2">B</text>
+  <!-- Dot accent -->
+  <circle cx="136" cy="58" r="8" fill="url(#acc1)" opacity="0.9"/>
+</svg>
