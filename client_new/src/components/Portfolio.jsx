@@ -462,6 +462,10 @@ import React, { useState, useEffect, useRef } from "react";
 import './style.css';
 import profileImage from "../assets/photo.png";
 import resumePDF from "../assets/resume.pdf";
+import awsCertificate from "../assets/certifications/aws-certificate.jpg";
+import sfvipCertificate from "../assets/certifications/sfvip-bhavani.pdf";
+import smartCoderCertificate from "../assets/certifications/smartinterviews-coder.png";
+import serviceNowCertificate from "../assets/certifications/ServiceNowCIS.pdf";
 import { FaLinkedin, FaInstagram, FaJava, FaPython, FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaDatabase, FaExternalLinkAlt, FaRocket, FaMedal, FaTrophy, FaLightbulb, FaEnvelope, FaCheck, FaExclamationTriangle } from "react-icons/fa";
 import { Link, Zap, Target } from "lucide-react";
 import InternshipShowcase from './InternshipShowcase';
@@ -543,32 +547,32 @@ const certificationsData = [
     title: "AWS Certified Cloud Practitioner",
     issuer: "Amazon Web Services",
     date: "2025",
-    image: "/assets/certifications/aws-cert.jpg",
-    credentialUrl: "#"
+    image: awsCertificate,
+    credentialUrl: awsCertificate
   },
   {
     id: 2,
     title: "Salesforce Developer",
     issuer: "SmartBridge",
     date: "2025",
-    image: "/assets/certifications/salesforce-cert.jpg",
-    credentialUrl: "#"
+    image: sfvipCertificate,
+    credentialUrl: sfvipCertificate
   },
   {
     id: 3,
     title: "Smart Coder Certification",
     issuer: "Smart Interviews",
     date: "2024",
-    image: "/assets/certifications/smartcoder-cert.jpg",
-    credentialUrl: "#"
+    image: smartCoderCertificate,
+    credentialUrl: smartCoderCertificate
   },
   {
     id: 4,
     title: "ServiceNow CSA Certified",
     issuer: "ServiceNow",
     date: "2025",
-    image: "/assets/certifications/servicenow-cert.jpg",
-    credentialUrl: "#"
+    image: serviceNowCertificate,
+    credentialUrl: serviceNowCertificate
   }
 ];
 
