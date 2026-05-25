@@ -22,8 +22,10 @@ app.use(cors({
     'http://localhost:3000', 
     'http://localhost:3001',
     'https://portfolio-frontend-rzmx.onrender.com',
-    'https://port-01-frontend.onrender.com'
-  ],
+    'https://port-01-frontend.onrender.com',
+    'https://port-01.onrender.com',
+    process.env.CORS_ORIGIN
+  ].filter(Boolean),
   credentials: true
 }));
 app.use(express.json({ limit: '10mb' }));

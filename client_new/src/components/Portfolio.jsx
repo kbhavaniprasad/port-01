@@ -471,7 +471,7 @@ import { Link, Zap, Target } from "lucide-react";
 import InternshipShowcase from './InternshipShowcase';
 
 // Backend URL configuration
-const API_BASE_URL = 'https://portfolio-backend-l2ar.onrender.com';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://portfolio-backend-l2ar.onrender.com';
 
 // Enhanced Logger class with better error handling
 class PortfolioLogger {
@@ -1092,6 +1092,9 @@ const Portfolio = () => {
     });
 
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
+
       const response = await fetch(`${API_BASE_URL}/api/send-email`, {
         method: "POST",
         headers: { 
@@ -1099,7 +1102,10 @@ const Portfolio = () => {
           "Accept": "application/json"
         },
         body: JSON.stringify(formData),
+        signal: controller.signal,
       });
+      
+      clearTimeout(timeoutId);
 
       const data = await response.json();
 
@@ -1135,7 +1141,9 @@ const Portfolio = () => {
 
       setSubmitStatus({ 
         success: false, 
-        message: error.message || 'Failed to send message. Please try again later or email me directly at kolaprasad001@gmail.com'
+        message: error.name === 'AbortError'
+          ? 'Request timed out. The server may be starting up — please try again in a moment.'
+          : error.message || 'Failed to send message. Please try again or email me directly at kolaprasad001@gmail.com'
       });
     } finally {
       setIsLoading(false);
