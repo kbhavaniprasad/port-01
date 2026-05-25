@@ -1092,8 +1092,7 @@ const Portfolio = () => {
     });
 
     try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000);
+      console.log('📤 Sending to:', `${API_BASE_URL}/api/send-email`);
 
       const response = await fetch(`${API_BASE_URL}/api/send-email`, {
         method: "POST",
@@ -1102,10 +1101,7 @@ const Portfolio = () => {
           "Accept": "application/json"
         },
         body: JSON.stringify(formData),
-        signal: controller.signal,
       });
-      
-      clearTimeout(timeoutId);
 
       const data = await response.json();
 
@@ -1131,20 +1127,26 @@ const Portfolio = () => {
     } catch (error) {
       console.error("Contact form error:", error);
       
+      // Determine user-friendly error message
+      let userMessage;
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        userMessage = `Cannot reach server at ${API_BASE_URL}. Make sure your backend is running.`;
+      } else if (error.name === 'AbortError' || error.name === 'TimeoutError') {
+        userMessage = 'Request timed out. The server may be starting up — please try again in a moment.';
+      } else {
+        userMessage = error.message || 'Failed to send message. Please try again or email me directly at kolaprasad001@gmail.com';
+      }
+
       // Log error
       logger.log('contact_form_error', {
         error: error.message,
+        errorName: error.name,
         name: formData.name,
         email: formData.email,
         timestamp: Date.now()
       });
 
-      setSubmitStatus({ 
-        success: false, 
-        message: error.name === 'AbortError'
-          ? 'Request timed out. The server may be starting up — please try again in a moment.'
-          : error.message || 'Failed to send message. Please try again or email me directly at kolaprasad001@gmail.com'
-      });
+      setSubmitStatus({ success: false, message: userMessage });
     } finally {
       setIsLoading(false);
     }
