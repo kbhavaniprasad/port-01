@@ -466,7 +466,7 @@ import awsCertificate from "../assets/certifications/aws-certificate.jpg";
 import sfvipCertificate from "../assets/certifications/sfvip-bhavani.pdf";
 import smartCoderCertificate from "../assets/certifications/smartinterviews-coder.png";
 import serviceNowCertificate from "../assets/certifications/ServiceNowCIS.pdf";
-import { FaLinkedin, FaInstagram, FaJava, FaPython, FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaDatabase, FaExternalLinkAlt, FaRocket, FaMedal, FaTrophy, FaLightbulb, FaEnvelope, FaCheck, FaExclamationTriangle } from "react-icons/fa";
+import { FaLinkedin, FaInstagram, FaJava, FaPython, FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaDatabase, FaExternalLinkAlt, FaRocket, FaMedal, FaTrophy, FaLightbulb, FaEnvelope, FaCheck, FaExclamationTriangle, FaBrain } from "react-icons/fa";
 import { Link, Zap, Target } from "lucide-react";
 import InternshipShowcase from './InternshipShowcase';
 
@@ -538,7 +538,8 @@ const skills = [
   { skill: "React", icon: <FaReact />, color: "#61dafb" },
   { skill: "Node.js", icon: <FaNodeJs />, color: "#68a063" },
   { skill: "MongoDB", icon: <FaDatabase />, color: "#47a248" },
-  { skill: "SQL", icon: <FaDatabase />, color: "#336791" }
+  { skill: "SQL", icon: <FaDatabase />, color: "#336791" },
+  { skill: "Machine Learning", icon: <FaBrain />, color: "#9370DB" }
 ];
 
 const certificationsData = [
