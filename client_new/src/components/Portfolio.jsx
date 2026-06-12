@@ -467,7 +467,7 @@ import sfvipCertificate from "../assets/certifications/sfvip-bhavani.pdf";
 import smartCoderCertificate from "../assets/certifications/smartinterviews-coder.png";
 import serviceNowCertificate from "../assets/certifications/ServiceNowCIS.pdf";
 import { FaLinkedin, FaInstagram, FaJava, FaPython, FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaDatabase, FaExternalLinkAlt, FaRocket, FaMedal, FaTrophy, FaLightbulb, FaEnvelope, FaCheck, FaExclamationTriangle, FaBrain } from "react-icons/fa";
-import { Link, Zap, Target } from "lucide-react";
+import { Target } from "lucide-react";
 import InternshipShowcase from './InternshipShowcase';
 
 // Backend URL configuration
@@ -643,15 +643,8 @@ const TechnicalSkills = () => {
 };
 
 const Certifications = () => {
-  const [hoveredCert, setHoveredCert] = useState(null);
-
   const handleCertHover = (id) => {
-    setHoveredCert(id);
     logger.log('certification_hover', { id, timestamp: Date.now() });
-  };
-
-  const handleCertLeave = () => {
-    setHoveredCert(null);
   };
 
   const handleCertClick = (cert) => {
@@ -669,24 +662,24 @@ const Certifications = () => {
   return (
     <section id="certifications">
       <div className="section-header">
+        <p className="section-eyebrow">Verified Credentials</p>
         <h1>Certifications</h1>
-        <p className="section-subtitle">Professional certifications and completed courses</p>
+        <p className="section-subtitle">Industry-recognized certifications validating my technical expertise</p>
       </div>
 
       <div className="certifications-container">
-        <div className="certifications-grid">
+        <div className="certifications-scroll-track">
           {certificationsData.map((cert) => (
-            <div 
+            <div
               key={cert.id}
-              className={`certification-card ${hoveredCert === cert.id ? 'hovered' : ''}`}
+              className="certification-card"
               onMouseEnter={() => handleCertHover(cert.id)}
-              onMouseLeave={handleCertLeave}
               onClick={() => handleCertClick(cert)}
             >
               <div className="certification-image-container">
                 <div className="certification-image-wrapper">
-                  <img 
-                    src={cert.image} 
+                  <img
+                    src={cert.image}
                     alt={cert.title}
                     className="certification-image"
                     onError={(e) => {
@@ -703,9 +696,13 @@ const Certifications = () => {
                 </div>
               </div>
               <div className="certification-content">
+                <div className="cert-badge">{cert.issuer}</div>
                 <h3>{cert.title}</h3>
                 <p className="cert-issuer">{cert.issuer}</p>
-                <p className="cert-date">{cert.date}</p>
+                <div className="cert-footer">
+                  <span className="cert-date">{cert.date}</span>
+                  <span className="cert-open-btn">Open ↗</span>
+                </div>
               </div>
             </div>
           ))}
@@ -715,41 +712,42 @@ const Certifications = () => {
   );
 };
 
+const accentMap = ['gold', 'purple', 'cyan'];
+
 const Achievements = () => {
-  const [hoveredAchievement, setHoveredAchievement] = useState(null);
-
   const handleAchievementHover = (id) => {
-    setHoveredAchievement(id);
     logger.log('achievement_hover', { id, timestamp: Date.now() });
-  };
-
-  const handleAchievementLeave = () => {
-    setHoveredAchievement(null);
   };
 
   return (
     <section id="achievements">
       <div className="section-header">
+        <p className="section-eyebrow">Recognition & Impact</p>
         <h1>Achievements</h1>
-        <p className="section-subtitle">Notable accomplishments and recognitions</p>
+        <p className="section-subtitle">Notable accomplishments and recognitions that define my journey</p>
       </div>
 
       <div className="achievements-container">
         <div className="achievements-grid">
-          {achievementsData.map((achievement) => (
-            <div 
+          {achievementsData.map((achievement, idx) => (
+            <div
               key={achievement.id}
-              className={`achievement-card ${hoveredAchievement === achievement.id ? 'hovered' : ''}`}
+              className="achievement-card"
+              data-accent={accentMap[idx % accentMap.length]}
               onMouseEnter={() => handleAchievementHover(achievement.id)}
-              onMouseLeave={handleAchievementLeave}
             >
-              <div className="achievement-icon">
-                {achievement.icon}
+              <div className="achievement-icon-wrap">
+                <div className="achievement-icon-bg" />
+                <div className="achievement-icon">
+                  {achievement.icon}
+                </div>
               </div>
               <div className="achievement-content">
                 <h3>{achievement.title}</h3>
                 <p>{achievement.description}</p>
-                <div className="achievement-year">{achievement.year}</div>
+                <div className="achievement-footer">
+                  <div className="achievement-year">{achievement.year}</div>
+                </div>
               </div>
               <div className="achievement-glow"></div>
             </div>
@@ -765,6 +763,20 @@ const ProjectCard = ({ project, index }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef(null);
+  const layoutVariants = [
+    "project-card--hero",
+    "project-card--tall",
+    "project-card--wide",
+    "project-card--compact",
+    "project-card--wide"
+  ];
+  const toneVariants = [
+    "project-card--tone-cyan",
+    "project-card--tone-gold",
+    "project-card--tone-violet"
+  ];
+  const layoutClass = layoutVariants[index % layoutVariants.length];
+  const toneClass = toneVariants[index % toneVariants.length];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -775,14 +787,15 @@ const ProjectCard = ({ project, index }) => {
       },
       { threshold: 0.1 }
     );
+    const currentCard = cardRef.current;
 
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
+    if (currentCard) {
+      observer.observe(currentCard);
     }
 
     return () => {
-      if (cardRef.current) {
-        observer.unobserve(cardRef.current);
+      if (currentCard) {
+        observer.unobserve(currentCard);
       }
     };
   }, []);
@@ -813,12 +826,19 @@ const ProjectCard = ({ project, index }) => {
   return (
     <div 
       ref={cardRef}
-      className={`project-card ${isHovered ? 'hovered' : ''} ${isVisible ? 'visible' : ''}`}
+      className={`project-card ${layoutClass} ${toneClass} ${isHovered ? 'hovered' : ''} ${isVisible ? 'visible' : ''}`}
       style={{ animationDelay: `${index * 0.1}s` }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleProjectClick}
     >
+      <div className="project-card-no">0{index + 1}</div>
+      <div className="project-card-aura project-card-aura-one"></div>
+      <div className="project-card-aura project-card-aura-two"></div>
+      <div className="project-meta">
+        <span className="project-kicker">{project.url ? "Live Project" : "Concept Build"}</span>
+        <span className="project-state">{project.tech?.length || 0} Tech Stack</span>
+      </div>
       <div className="project-header">
         <h3 className="project-title">{project.title}</h3>
         {project.url && (
@@ -828,20 +848,20 @@ const ProjectCard = ({ project, index }) => {
         )}
       </div>
       <p className="project-description">{project.desc}</p>
-      <div className="project-tech-stack">
-        {(project.tech || ["MERN", "React", "Node.js"]).map((tag, idx) => (
-          <span key={idx} className="tech-tag">{tag}</span>
-        ))}
-      </div>
       <div className="project-hover-content">
+        <div className="project-tech-stack">
+          {(project.tech || ["MERN", "React", "Node.js"]).map((tag, idx) => (
+            <span key={idx} className="tech-tag">{tag}</span>
+          ))}
+        </div>
         <div className="project-stats">
           <div className="stat">
             <Target size={16} />
-            <span>Completed</span>
+            <span>Built end-to-end</span>
           </div>
           <div className="stat">
             <FaRocket size={16} />
-            <span>Live</span>
+            <span>{project.url ? "Open showcase" : "Case study ready"}</span>
           </div>
         </div>
       </div>
