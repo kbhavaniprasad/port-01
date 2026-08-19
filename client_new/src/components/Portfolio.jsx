@@ -1296,7 +1296,7 @@ const Portfolio = () => {
           <div id="text">
             <div id="text-content">
               <h1 id="t1">Hello, it's me</h1>
-              <h1 id="t1">Kola Bhavani Prasad</h1>
+              <h1 id="t1">Bhavani Prasad Kola</h1>
             </div>
             <p id="content">
               Full-stack developer focused on building scalable web applications, efficient backend systems, and performance-driven user experiences. Strong in Data Structures and Algorithms, with a practical approach to writing clean, reliable, and production-ready code.
@@ -1350,7 +1350,7 @@ const Portfolio = () => {
         <section id="project">
           <div className="section-header">
             <h1>Projects</h1>
-            <p className="section-subtitle">Innovative solutions and real-world applications</p>
+            <p className="section-subtitle"></p>
           </div>
           <div className="projects-container">
             <div className="projects-grid">

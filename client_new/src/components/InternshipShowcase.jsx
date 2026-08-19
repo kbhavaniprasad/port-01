@@ -403,7 +403,7 @@ const InternshipShowcase = () => {
             Internship
           </h2>
           <p className="is-subtitle">
-            A glimpse of my internship experiences and the impact I made.
+            {/* A glimpse of my internship experiences and the impact I made. */}
           </p>
           <div className="is-title-divider" />
         </motion.header>
@@ -416,8 +416,8 @@ const InternshipShowcase = () => {
         >
           <span className="is-hint-line" />
           <div className="is-hint-copy">
-            <MousePointerClick size={18} />
-            <span>Hover over a card to reveal more</span>
+            {/* <MousePointerClick size={18} /> */}
+            {/* <span>Hover over a card to reveal more</span> */}
           </div>
           <span className="is-hint-line" />
         </motion.div>
