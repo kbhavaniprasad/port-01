@@ -20,7 +20,7 @@ body {
   background-attachment: fixed;
   color: white;
   line-height: 1.6;
-  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 ::-webkit-scrollbar {
@@ -299,16 +299,15 @@ body {
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-auto-rows: minmax(120px, auto);
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 24px;
   padding: 20px;
+  align-items: stretch;
 }
 
 .project-card {
   --project-accent: #61dafb;
   --project-soft: rgba(97, 218, 251, 0.18);
-  grid-column: span 4;
   background:
     linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
     radial-gradient(circle at top right, var(--project-soft), transparent 45%),
@@ -323,7 +322,6 @@ body {
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(18px);
-  cursor: pointer;
   opacity: 0;
   transform: translateY(36px);
   animation: slideUpFade 0.6s ease forwards;
@@ -331,8 +329,7 @@ body {
   text-align: left;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 280px;
+  height: 380px;
 }
 
 .project-card.visible {
@@ -374,26 +371,6 @@ body {
     0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
-.project-card--hero {
-  grid-column: span 7;
-  grid-row: span 2;
-  min-height: 100%;
-  padding: 38px;
-}
-
-.project-card--tall {
-  grid-column: span 5;
-  grid-row: span 2;
-}
-
-.project-card--wide {
-  grid-column: span 5;
-}
-
-.project-card--compact {
-  grid-column: span 4;
-}
-
 .project-card--tone-cyan {
   --project-accent: #61dafb;
   --project-soft: rgba(97, 218, 251, 0.18);
@@ -407,18 +384,6 @@ body {
 .project-card--tone-violet {
   --project-accent: #b197fc;
   --project-soft: rgba(177, 151, 252, 0.18);
-}
-
-.project-card-no {
-  position: absolute;
-  top: 22px;
-  right: 24px;
-  font-size: clamp(2rem, 4vw, 3.8rem);
-  line-height: 1;
-  font-weight: 800;
-  letter-spacing: -0.06em;
-  color: rgba(255, 255, 255, 0.08);
-  pointer-events: none;
 }
 
 .project-card-aura {
@@ -532,29 +497,123 @@ body {
 .project-description {
   color: rgba(255, 255, 255, 0.7);
   text-align: left;
+  text-justify: auto;
   line-height: 1.6;
-  margin-bottom: 28px;
-  font-size: 0.98rem;
+  margin-bottom: 16px;
+  font-size: 0.94rem;
+  letter-spacing: 0.01em;
   position: relative;
   z-index: 1;
-  max-width: 58ch;
+  flex: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 
 .project-tech-stack {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   justify-content: flex-start;
+  margin-bottom: 14px;
+}
+
+.project-action-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.project-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+  outline: none;
+}
+
+.project-btn--tech {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--project-accent);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.project-btn--tech:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--project-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.project-btn--tech.active {
+  background: rgba(97, 218, 251, 0.12);
+  border-color: var(--project-accent);
+  box-shadow: 0 0 10px rgba(97, 218, 251, 0.18);
+}
+
+.project-card--tone-gold .project-btn--tech.active {
+  background: rgba(255, 209, 102, 0.12);
+  box-shadow: 0 0 10px rgba(255, 209, 102, 0.18);
+}
+
+.project-card--tone-violet .project-btn--tech.active {
+  background: rgba(177, 151, 252, 0.12);
+  box-shadow: 0 0 10px rgba(177, 151, 252, 0.18);
+}
+
+.project-btn--github {
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.75);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.project-btn--github:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
 }
 
 .tech-tag {
   background: rgba(255, 255, 255, 0.05);
-  color: white;
-  padding: 8px 14px;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 6px 12px;
   border-radius: 999px;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   border: 1px solid rgba(255, 255, 255, 0.09);
-  transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  transition: transform 0.3s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease, color 0.35s ease;
+}
+
+.tech-tag--lit {
+  background: rgba(97, 218, 251, 0.12);
+  color: #61dafb;
+  border-color: rgba(97, 218, 251, 0.45);
+  box-shadow: 0 0 8px rgba(97, 218, 251, 0.15);
+  transform: translateY(-1px);
+}
+
+.project-card--tone-gold .tech-tag--lit {
+  background: rgba(255, 209, 102, 0.12);
+  color: #ffd166;
+  border-color: rgba(255, 209, 102, 0.45);
+  box-shadow: 0 0 8px rgba(255, 209, 102, 0.15);
+}
+
+.project-card--tone-violet .tech-tag--lit {
+  background: rgba(177, 151, 252, 0.12);
+  color: #b197fc;
+  border-color: rgba(177, 151, 252, 0.45);
+  box-shadow: 0 0 8px rgba(177, 151, 252, 0.15);
 }
 
 .project-card:hover .tech-tag {
@@ -566,9 +625,10 @@ body {
 .project-hover-content {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
   margin-top: auto;
-  display: grid;
-  gap: 20px;
 }
 
 .project-stats {
@@ -1702,21 +1762,12 @@ input {
 
 
   .projects-grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
   }
 
-  .project-card,
-  .project-card--hero,
-  .project-card--tall,
-  .project-card--wide,
-  .project-card--compact {
-    grid-column: span 3;
-    grid-row: span 1;
-    min-height: 260px;
-  }
-  
   .project-card {
+    height: 400px;
     padding: 25px;
   }
   
@@ -1758,19 +1809,13 @@ input {
 
    .project-card {
     padding: 20px;
+    height: auto;
+    min-height: 340px;
   }
 
   .projects-grid {
     grid-template-columns: 1fr;
     padding: 10px 0;
-  }
-  
-  .project-card,
-  .project-card--hero,
-  .project-card--tall,
-  .project-card--wide,
-  .project-card--compact {
-    grid-column: span 1;
   }
   
   .internship-card {

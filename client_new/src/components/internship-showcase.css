@@ -10,7 +10,7 @@
   --expanded-width: 920px;
   --card-height: 520px;
   --card-overlap: -10px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 * {
@@ -25,7 +25,7 @@ body {
   margin: 0;
   background: var(--section-bg);
   color: var(--text-main);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .is-section {

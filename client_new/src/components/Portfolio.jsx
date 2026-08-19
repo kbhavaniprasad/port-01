@@ -466,8 +466,7 @@ import awsCertificate from "../assets/certifications/aws-certificate.jpg";
 import sfvipCertificate from "../assets/certifications/sfvip-bhavani.pdf";
 import smartCoderCertificate from "../assets/certifications/smartinterviews-coder.png";
 import serviceNowCertificate from "../assets/certifications/ServiceNowCIS.pdf";
-import { FaLinkedin, FaInstagram, FaJava, FaPython, FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaDatabase, FaExternalLinkAlt, FaRocket, FaMedal, FaTrophy, FaLightbulb, FaEnvelope, FaCheck, FaExclamationTriangle, FaBrain } from "react-icons/fa";
-import { Target } from "lucide-react";
+import { FaLinkedin, FaInstagram, FaJava, FaPython, FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaDatabase, FaExternalLinkAlt, FaMedal, FaTrophy, FaLightbulb, FaEnvelope, FaCheck, FaExclamationTriangle, FaBrain } from "react-icons/fa";
 import InternshipShowcase from './InternshipShowcase';
 
 // Backend URL configuration
@@ -763,19 +762,11 @@ const ProjectCard = ({ project, index }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef(null);
-  const layoutVariants = [
-    "project-card--hero",
-    "project-card--tall",
-    "project-card--wide",
-    "project-card--compact",
-    "project-card--wide"
-  ];
   const toneVariants = [
     "project-card--tone-cyan",
     "project-card--tone-gold",
     "project-card--tone-violet"
   ];
-  const layoutClass = layoutVariants[index % layoutVariants.length];
   const toneClass = toneVariants[index % toneVariants.length];
 
   useEffect(() => {
@@ -812,7 +803,8 @@ const ProjectCard = ({ project, index }) => {
     setIsHovered(false);
   };
 
-  const handleProjectClick = () => {
+  const handleGitHubClick = (e) => {
+    e.stopPropagation();
     if (project.url) {
       logger.log('project_click', {
         project: project.title,
@@ -823,48 +815,46 @@ const ProjectCard = ({ project, index }) => {
     }
   };
 
+
+
   return (
-    <div 
+    <div
       ref={cardRef}
-      className={`project-card ${layoutClass} ${toneClass} ${isHovered ? 'hovered' : ''} ${isVisible ? 'visible' : ''}`}
+      className={`project-card ${toneClass} ${isHovered ? 'hovered' : ''} ${isVisible ? 'visible' : ''}`}
       style={{ animationDelay: `${index * 0.1}s` }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={handleProjectClick}
     >
-      <div className="project-card-no">0{index + 1}</div>
       <div className="project-card-aura project-card-aura-one"></div>
       <div className="project-card-aura project-card-aura-two"></div>
-      <div className="project-meta">
-        <span className="project-kicker">{project.url ? "Live Project" : "Concept Build"}</span>
-        <span className="project-state">{project.tech?.length || 0} Tech Stack</span>
-      </div>
+
       <div className="project-header">
         <h3 className="project-title">{project.title}</h3>
-        {project.url && (
-          <div className="project-link">
-            <FaExternalLinkAlt />
-          </div>
-        )}
       </div>
+
       <p className="project-description">{project.desc}</p>
+
       <div className="project-hover-content">
         <div className="project-tech-stack">
           {(project.tech || ["MERN", "React", "Node.js"]).map((tag, idx) => (
             <span key={idx} className="tech-tag">{tag}</span>
           ))}
         </div>
-        <div className="project-stats">
-          <div className="stat">
-            <Target size={16} />
-            <span>Built end-to-end</span>
+
+        {project.url && (
+          <div className="project-action-row">
+            <button
+              className="project-btn project-btn--github"
+              onClick={handleGitHubClick}
+              title="View on GitHub"
+            >
+              <FaExternalLinkAlt style={{ marginRight: '6px', fontSize: '0.75rem' }} />
+              GitHub
+            </button>
           </div>
-          <div className="stat">
-            <FaRocket size={16} />
-            <span>{project.url ? "Open showcase" : "Case study ready"}</span>
-          </div>
-        </div>
+        )}
       </div>
+
       <div className="project-glow"></div>
     </div>
   );
@@ -1245,7 +1235,7 @@ const Portfolio = () => {
     },
     {
       title:"API KEY Management System",
-      desc:"API Key Vault is a secure MERN stack web application for storing and managing API keys in one centralized platform. It features user authentication, protected dashboards, API key masking with show/hide toggle, copy-to-clipboard functionality, and categorized key management using Name, Value, and Purpose fields. Built with React.js, Tailwind CSS, Node.js, Express.js, and MongoDB, the application provides a modern, responsive, and secure developer-focused interface.",
+      desc:"A secure MERN application for storing and organizing API keys with authentication, masked key visibility, copy-to-clipboard support, and a clean developer dashboard.",
       url:"https://api-keys-chi.vercel.app/",
       tech: ["MERN", "React", "Node.js"]
     },
@@ -1309,7 +1299,7 @@ const Portfolio = () => {
               <h1 id="t1">Kola Bhavani Prasad</h1>
             </div>
             <p id="content">
-              Passionate about Full Stack Development and Data Structures & Algorithms, constantly exploring efficient solutions and scalable architectures. Excited to build innovative web applications while optimizing performance through algorithmic problem-solving.
+              Full-stack developer focused on building scalable web applications, efficient backend systems, and performance-driven user experiences. Strong in Data Structures and Algorithms, with a practical approach to writing clean, reliable, and production-ready code.
             </p>
           </div>
           <img src={profileImage} id="img1" alt="Profile" />
@@ -1339,7 +1329,7 @@ const Portfolio = () => {
           </div>
           <div id="para">
             <h1>About Me</h1>
-            <h3>Passionate full-stack developer with expertise in the MERN stack and a strong grasp of Data Structures & Algorithms (DSA). Skilled in designing and developing scalable web applications with efficient backend logic and optimized database management.</h3>
+            <h3>Full-stack developer with hands-on experience in the MERN stack, focused on building secure, scalable, and maintainable applications. Strong foundation in Data Structures and Algorithms with proven ability to design responsive interfaces, develop robust APIs, and optimize database-backed systems for real-world use.</h3>
             <div className="resume-buttons">
               <a href={resumePDF} download="Kola_Bhavani_Prasad_Resume.pdf">
                 <button className="resume-btn" onClick={handleResumeDownload}>
